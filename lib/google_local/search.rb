@@ -16,9 +16,11 @@ module GoogleLocal
     # The latitude and longitude of the central location
     attr_accessor :latlng
     
-    def initialize(center_location, api_key=nil)
+    def initialize(center_location = nil, api_key=nil)
       @api_key = api_key
-      @latlng = GoogleLocal::Geocode.find_latlng(center_location) # Parse center_location into latitude and longitude
+      if center_location
+        @latlng = GoogleLocal::Geocode.find_latlng(center_location) # Parse center_location into latitude and longitude
+      end
     end
     
     # Perform a Google Local search given a query.
@@ -27,12 +29,27 @@ module GoogleLocal
       fetch_locations(self.class.get("/local", :query => options)) # Make the get request
     end
     
+    # Perform a Google Local search given a query (w/out a lat/lng requirement)
+    def find_local(query, options={})
+      query = encode_query(query)
+      options.merge!(:q => query)
+
+      response = self.class.get("/local", :query => options)
+      locations(response)
+    end
+
     private
     
     def fetch_locations(response)
       response['responseData']['results'].flatten.collect {|r| Mash.new(r) }
     end
     
+    def locations(response)
+      response['responseData']['results']
+    end
+
+    def encode_query(query)
+      query.gsub(/ /, '+')
+    end
   end
-  
 end

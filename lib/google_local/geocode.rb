@@ -1,5 +1,7 @@
 module GoogleLocal
   
+  MAPS_API_KEY = 'YOUR_KEY_HERE'
+
   # Geocoding to fetch the latitude/longitude of a location string
   class Geocode
     include Geokit::Geocoders
