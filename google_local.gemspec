@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.2}
-  s.summary = %q{TODO}
+  s.summary = %q{Your friendly neighborhood google local search toolkit.}
   s.test_files = [
     "spec/google_local_spec.rb",
      "spec/spec_helper.rb"
